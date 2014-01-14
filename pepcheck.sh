@@ -12,4 +12,3 @@ grep -v $VENV_DIR | \
 while read ln; do
     pep8 --filename="*.py" --show-pep8  --show-source "$ln"
 done
-
