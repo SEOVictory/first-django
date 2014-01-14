@@ -1,3 +1,5 @@
+tutorial/
+
 *.sqlite3
 
 *.py[cod]
