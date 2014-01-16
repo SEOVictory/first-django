@@ -14,4 +14,6 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', contacts.views.ListContactView.as_view(),
         name='contact-list'),
+    url(r'^new$', contacts.views.CreateContactView.as_view(),
+        name="contacts-new"),
 )
