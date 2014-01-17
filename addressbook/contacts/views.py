@@ -1,4 +1,5 @@
 from django.views.generic import ListView, CreateView
+from django.core.urlresolvers import reverse
 
 from contacts.models import Contact
 
@@ -20,4 +21,4 @@ class CreateContactView(CreateView):
     template_name = 'edit_contact.html'
 
     def get_success_url(self):
-        return reverse('contacts-list')
+        return reverse('contact-list')
