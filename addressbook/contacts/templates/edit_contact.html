@@ -1,11 +1,14 @@
-<h1>Add Contact</h1>
+{% extends 'base.html' %}
 
-<form action="{% url "contacts-new" %}" method="POST">
-  {% csrf_token %}
-  <ul>
-    {{ form.as_ul }}
-  </ul>
-  <input id="save_contact" type="submit" value="Save" />
-</form>
+{% block content %}
+  <h1>Add Contact</h1>
 
-<a href="{% url "contact-list" %}">back to list</a>
+  <form action="{% url "contacts-new" %}" method="POST">
+    {% csrf_token %}
+    <ul>
+      {{ form.as_ul }}
+    </ul>
+    <input id="save_contact" type="submit" value="Save" />
+  </form>
+  <a href="{% url "contact-list" %}">back to list</a>
+{% endblock %}
