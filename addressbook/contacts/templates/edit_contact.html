@@ -15,5 +15,13 @@
       Submit
     </button>
   </form>
+  {% if contact.id %}
+    <a href="{% url "contacts-delete" pk=contact.id %}">
+      Delete
+    </a>
+    <br />
+  {% endif %}
+
+
   <a href="{% url "contact-list" %}">back to list</a>
 {% endblock %}

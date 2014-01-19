@@ -61,7 +61,7 @@ class ContactListIntegrationTests(LiveServerTestCase):
         self.selenium.find_element_by_id('id_first_name').send_keys('test')
         self.selenium.find_element_by_id('id_last_name').send_keys('contact')
         self.selenium.find_element_by_id('id_email').send_keys(
-            'test2@example.com')
+            'edit@example.com')
         self.selenium.find_element_by_id('save_contact').click()
 
         self.selenium.find_element_by_id('edit_1').click()
@@ -77,6 +77,26 @@ class ContactListIntegrationTests(LiveServerTestCase):
         self.assertEqual(
             self.selenium.find_elements_by_css_selector('.contact')[-1].text,
             'New contact ( edit )')
+
+    def test_delete_contact(self):
+
+        self.selenium.get('%s%s' % (self.live_server_url, '/'))
+
+        self.selenium.find_element_by_link_text('add contact').click()
+
+        self.selenium.find_element_by_id('id_first_name').send_keys('test')
+        self.selenium.find_element_by_id('id_last_name').send_keys('contact')
+        self.selenium.find_element_by_id('id_email').send_keys(
+            'delete@example.com')
+        self.selenium.find_element_by_id('save_contact').click()
+
+        self.selenium.find_element_by_link_text('edit').click()
+        self.selenium.find_element_by_link_text('Delete').click()
+        self.selenium.find_element_by_id('yes_delete').click()
+
+        self.assertEqual(
+            self.selenium.find_elements_by_css_selector('.contact'),
+            [])
 
 
 class ContactTests(TestCase):
