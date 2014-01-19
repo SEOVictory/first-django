@@ -16,12 +16,14 @@ class ContactListIntegrationTests(LiveServerTestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.selenium = WebDriver()
-        super(ContactListIntegrationTests, cls).setUpClass()
+        try:
+            cls.selenium = WebDriver()
+            super(ContactListIntegrationTests, cls).setUpClass()
+        except Exception as e:
+            print e
 
     @classmethod
     def tearDownClass(cls):
-
         cls.selenium.quit()
         super(ContactListIntegrationTests, cls).tearDownClass()
 
@@ -127,6 +129,43 @@ class ContactListIntegrationTests(LiveServerTestCase):
         self.assertEquals(
             self.selenium.find_element_by_id('contact_email').text,
             'detail@example.com')
+
+    def test_addresses(self):
+
+        self.selenium.get('%s%s' % (self.live_server_url, '/'))
+
+        self.selenium.find_element_by_link_text('add contact').click()
+
+        self.selenium.find_element_by_id('id_first_name').send_keys('test')
+        self.selenium.find_element_by_id('id_last_name').send_keys('contact')
+        self.selenium.find_element_by_id('id_email').send_keys(
+            'addresses@example.com')
+        self.selenium.find_element_by_id('id_confirm_email').send_keys(
+            'addresses@example.com')
+        self.selenium.find_element_by_id('save_contact').click()
+
+        self.selenium.find_element_by_id('edit_1').click()
+
+        self.selenium.find_element_by_id('edit_addresses').click()
+
+        self.selenium.find_element_by_id(
+            'id_address_set-0-address_type').send_keys('home')
+        self.selenium.find_element_by_id(
+            'id_address_set-0-address').send_keys('123 Fake St')
+        self.selenium.find_element_by_id(
+            'id_address_set-0-city').send_keys('Springfield')
+        self.selenium.find_element_by_id(
+            'id_address_set-0-state').send_keys('MA')
+        self.selenium.find_element_by_id(
+            'id_address_set-0-postal_code').send_keys('12345')
+
+        self.selenium.find_element_by_id(
+            'save_button').click()
+
+        self.assertEquals(
+            self.selenium.find_element_by_id(
+                'address_address-1').text,
+            '123 Fake St')
 
 
 class ContactTests(TestCase):

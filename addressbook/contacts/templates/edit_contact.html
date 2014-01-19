@@ -33,7 +33,15 @@
       Submit
     </button>
   </form>
+
+
   {% if contact.id %}
+    <a href="{% url "contacts-edit-addresses" pk=contact.id %}"
+       id="edit_addresses">
+      Edit Addresses
+    </a>
+
+    <br />
     <a href="{% url "contacts-delete" pk=contact.id %}">
       Delete
     </a>
