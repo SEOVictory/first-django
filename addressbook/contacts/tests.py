@@ -1,11 +1,13 @@
 from django.test import TestCase
 from django.test.client import Client, RequestFactory
 from django.test import LiveServerTestCase
+from django.core.exceptions import ValidationError
 
 from selenium.webdriver.firefox.webdriver import WebDriver
 
 from contacts.models import Contact
 from contacts.views import ListContactView
+from contacts.forms import ContactForm
 
 
 class ContactListIntegrationTests(LiveServerTestCase):
@@ -135,6 +137,36 @@ class ContactTests(TestCase):
         self.assertEquals(
             str(contact),
             'John Smith')
+
+
+class ContactFormsTests(TestCase):
+
+    def test_email_confirm(self):
+
+        vals = {
+            'first_name': 'foo',
+            'last_name': 'bar',
+            'email': 'test@example.com',
+            'confirm_email': 'test@example.com'}
+
+        form = ContactForm(vals)
+        form.is_valid()
+        form.clean()
+
+    def test_confirm_email_fail(self):
+
+        vals = {
+            'first_name': 'foo',
+            'last_name': 'bar',
+            'email': 'test@example.com',
+            'confirm_email': 'doesNotMatch@example.com'}
+
+        form = ContactForm(vals)
+        form.is_valid()
+
+        self.assertRaises(
+            ValidationError,
+            form.clean)
 
 
 class ContactListViewTests(TestCase):
