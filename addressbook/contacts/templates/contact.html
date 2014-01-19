@@ -8,4 +8,20 @@
   <span id="contact_email">{{ contact.email }}</a>
 </p>
 
+<ul>
+  {% for address in contact.address_set.all %}
+    <li>
+      {% if address.address %}
+        <span id="address_address-{{ forloop.counter }}">
+          {{ address.address }}
+        </span>
+        <br>
+      {% endif %}
+
+      {{ address.city }}, {{ address.state }}<br>
+      {{ address.postal_code }}
+    </li>
+  {% endfor %}
+</ul>
+
 {% endblock %}

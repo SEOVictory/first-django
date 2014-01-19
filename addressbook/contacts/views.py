@@ -6,7 +6,7 @@ from django.views.generic import ListView, \
 from django.core.urlresolvers import reverse
 
 from contacts.models import Contact
-from contacts.forms import ContactForm
+from contacts.forms import ContactForm, ContactAddressFormSet
 
 # Create your views here.
 
@@ -68,3 +68,15 @@ class DetailContactView(DetailView):
 
     model = Contact
     template_name = 'contact.html'
+
+
+class EditContactAddressesView(UpdateView):
+
+    model = Contact
+    template_name = 'edit_addresses.html'
+    form_class = ContactAddressFormSet
+
+    def get_success_url(self):
+
+        # redirect to Contact view
+        return self.get_object().get_absolute_url()

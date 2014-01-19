@@ -18,11 +18,14 @@ urlpatterns = patterns('',
     url(r'^new$', contacts.views.CreateContactView.as_view(),
         name="contacts-new"),
    url(r'^edit/(?P<pk>\d+)$', contacts.views.UpdateContactView.as_view(),
-        name="contacts-edit"),
+       name="contacts-edit"),
    url(r'^delete/(?P<pk>\d+)$', contacts.views.DeleteContactView.as_view(),
-        name="contacts-delete"),
+       name="contacts-delete"),
    url(r'^(?P<pk>\d+)$', contacts.views.DetailContactView.as_view(),
-        name="contacts-view"),
+       name="contacts-view"),
+   url(r'^edit/(?P<pk>\d+)/addresses$',
+       contacts.views.EditContactAddressesView.as_view(),
+       name="contacts-edit-addresses"),
 )
 
 urlpatterns += staticfiles_urlpatterns()
