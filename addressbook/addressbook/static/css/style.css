@@ -1,6 +1,7 @@
 label[for=id_first_name],
 label[for=id_last_name],
-label[for=id_email]
+label[for=id_email],
+label[for=id_confirm_email]
 {
     display:block;
 }

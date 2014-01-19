@@ -46,6 +46,8 @@ class ContactListIntegrationTests(LiveServerTestCase):
         self.selenium.find_element_by_id('id_last_name').send_keys('contact')
         self.selenium.find_element_by_id('id_email').send_keys(
             'test@example.com')
+        self.selenium.find_element_by_id('id_confirm_email').send_keys(
+            'test@example.com')
         self.selenium.find_element_by_id('save_contact').click()
 
         self.assertEqual(
@@ -61,6 +63,8 @@ class ContactListIntegrationTests(LiveServerTestCase):
         self.selenium.find_element_by_id('id_first_name').send_keys('test')
         self.selenium.find_element_by_id('id_last_name').send_keys('contact')
         self.selenium.find_element_by_id('id_email').send_keys(
+            'edit@example.com')
+        self.selenium.find_element_by_id('id_confirm_email').send_keys(
             'edit@example.com')
         self.selenium.find_element_by_id('save_contact').click()
 
@@ -88,6 +92,8 @@ class ContactListIntegrationTests(LiveServerTestCase):
         self.selenium.find_element_by_id('id_last_name').send_keys('contact')
         self.selenium.find_element_by_id('id_email').send_keys(
             'delete@example.com')
+        self.selenium.find_element_by_id('id_confirm_email').send_keys(
+            'delete@example.com')
         self.selenium.find_element_by_id('save_contact').click()
 
         self.selenium.find_element_by_link_text('edit').click()
@@ -107,6 +113,8 @@ class ContactListIntegrationTests(LiveServerTestCase):
         self.selenium.find_element_by_id('id_first_name').send_keys('test')
         self.selenium.find_element_by_id('id_last_name').send_keys('contact')
         self.selenium.find_element_by_id('id_email').send_keys(
+            'detail@example.com')
+        self.selenium.find_element_by_id('id_confirm_email').send_keys(
             'detail@example.com')
         self.selenium.find_element_by_id('save_contact').click()
 
