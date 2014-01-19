@@ -17,6 +17,7 @@ class ContactListIntegrationTests(LiveServerTestCase):
 
     @classmethod
     def tearDownClass(cls):
+
         cls.selenium.quit()
         super(ContactListIntegrationTests, cls).tearDownClass()
 
@@ -28,7 +29,7 @@ class ContactListIntegrationTests(LiveServerTestCase):
 
         self.assertEqual(
             self.selenium.find_elements_by_css_selector('.contact')[0].text,
-            'foo bar')
+            'foo bar ( edit )')
 
     def test_add_contact_linked(self):
 
@@ -49,7 +50,33 @@ class ContactListIntegrationTests(LiveServerTestCase):
 
         self.assertEqual(
             self.selenium.find_elements_by_css_selector('.contact')[-1].text,
-            'test contact')
+            'test contact ( edit )')
+
+    def test_edit_contact(self):
+
+        self.selenium.get('%s%s' % (self.live_server_url, '/'))
+
+        self.selenium.find_element_by_link_text('add contact').click()
+
+        self.selenium.find_element_by_id('id_first_name').send_keys('test')
+        self.selenium.find_element_by_id('id_last_name').send_keys('contact')
+        self.selenium.find_element_by_id('id_email').send_keys(
+            'test2@example.com')
+        self.selenium.find_element_by_id('save_contact').click()
+
+        self.selenium.find_element_by_id('edit_1').click()
+
+        self.selenium.find_element_by_id('id_first_name').send_keys(
+            "\b" * 4)
+
+        self.selenium.find_element_by_id('id_first_name').send_keys(
+            'New')
+
+        self.selenium.find_element_by_id('save_contact').click()
+
+        self.assertEqual(
+            self.selenium.find_elements_by_css_selector('.contact')[-1].text,
+            'New contact ( edit )')
 
 
 class ContactTests(TestCase):
