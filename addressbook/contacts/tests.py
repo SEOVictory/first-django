@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.test.client import Client, RequestFactory
 from django.test import LiveServerTestCase
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError, ObjectDoesNotExist
 
 from selenium.webdriver.firefox.webdriver import WebDriver
 
@@ -167,6 +167,41 @@ class ContactFormsTests(TestCase):
         self.assertRaises(
             ValidationError,
             form.clean)
+
+    def test_post_contact_good_email(self):
+
+        c = Client()
+
+        vals = {
+            'first_name': 'foo',
+            'last_name': 'bar',
+            'email': 'test@example.com',
+            'confirm_email': 'test@example.com'}
+
+        response = c.post('/new', vals)
+
+        contact = Contact.objects.get(pk=1)
+
+        self.assertTrue(
+            contact,
+            "foo bar")
+
+    def test_post_contact_bad_email(self):
+
+        c = Client()
+
+        vals = {
+            'first_name': 'foo',
+            'last_name': 'bar',
+            'email': 'test@example.com',
+            'confirm_email': 'doesNotMatch@example.com'}
+
+        response = c.post('/new', vals)
+
+        self.assertRaises(
+            ObjectDoesNotExist,
+            Contact.objects.get,
+            pk=1)
 
 
 class ContactListViewTests(TestCase):
