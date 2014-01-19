@@ -21,6 +21,8 @@ urlpatterns = patterns('',
         name="contacts-edit"),
    url(r'^delete/(?P<pk>\d+)$', contacts.views.DeleteContactView.as_view(),
         name="contacts-delete"),
+   url(r'^(?P<pk>\d+)$', contacts.views.DetailContactView.as_view(),
+        name="contacts-view"),
 )
 
 urlpatterns += staticfiles_urlpatterns()

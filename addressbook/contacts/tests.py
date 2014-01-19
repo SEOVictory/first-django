@@ -98,6 +98,24 @@ class ContactListIntegrationTests(LiveServerTestCase):
             self.selenium.find_elements_by_css_selector('.contact'),
             [])
 
+    def test_detail_contact(self):
+
+        self.selenium.get('%s%s' % (self.live_server_url, '/'))
+
+        self.selenium.find_element_by_link_text('add contact').click()
+
+        self.selenium.find_element_by_id('id_first_name').send_keys('test')
+        self.selenium.find_element_by_id('id_last_name').send_keys('contact')
+        self.selenium.find_element_by_id('id_email').send_keys(
+            'detail@example.com')
+        self.selenium.find_element_by_id('save_contact').click()
+
+        self.selenium.find_element_by_link_text('test contact').click()
+
+        self.assertEquals(
+            self.selenium.find_element_by_id('contact_email').text,
+            'detail@example.com')
+
 
 class ContactTests(TestCase):
     """ Contact model tests. """
