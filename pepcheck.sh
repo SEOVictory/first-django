@@ -1,5 +1,13 @@
 #!/bin/sh
 
+cd "$(git rev-parse --show-toplevel)"
+CWD=$(pwd)
+PYTHON=$(which python)
+if [ $PYTHON != "$CWD/tutorial/bin/python" ]; then
+    echo "Wrong Working Directory"
+    exit 1
+fi
+
 VENV_DIR="./tutorial"
 PEP8='pep8'
 

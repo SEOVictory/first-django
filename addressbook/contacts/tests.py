@@ -18,6 +18,7 @@ class ContactListIntegrationTests(LiveServerTestCase):
     def setUpClass(cls):
         try:
             cls.selenium = WebDriver()
+            cls.selenium.implicitly_wait(3)
             super(ContactListIntegrationTests, cls).setUpClass()
         except Exception as e:
             print e
